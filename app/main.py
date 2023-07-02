@@ -5,4 +5,4 @@ dbm = DBManager()
 hh = HeadHunterAPI()
 
 if __name__ == '__main__':
-    print(hh.get_companies())
+    print(hh.get_company_by_id(1740))
