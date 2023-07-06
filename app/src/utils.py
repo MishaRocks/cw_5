@@ -1,6 +1,6 @@
 import psycopg2
 from app.src.hh_api import HeadHunterAPI
-
+from app.src.config import config
 
 hh = HeadHunterAPI()
 

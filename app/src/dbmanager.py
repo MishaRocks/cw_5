@@ -49,9 +49,9 @@ class DBManager:
             user="postgres",
             password="qadratura")
         with conn.cursor() as cur:
-            cur.execute("""SELECT AVG(payment) FROM vacancies""")
+            cur.execute("""SELECT CAST(ROUND(AVG(payment)) as INTEGER) FROM vacancies""")
             result = cur.fetchall()
-        return result
+        return result[0][0]
 
     def get_vacancies_with_higher_salary(self):
         """

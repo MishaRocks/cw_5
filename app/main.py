@@ -42,7 +42,6 @@ def interface():
             keyword = input('Введите ключевое слово: ')
             print(dbm.get_vacancies_with_keyword(keyword))
             print()
-
         else:
             print('Неправильный запрос')
 
