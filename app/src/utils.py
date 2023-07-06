@@ -47,7 +47,7 @@ def create_tables():
                         CREATE TABLE vacancies (
                         vacancy_id SERIAL PRIMARY KEY,
                         title varchar(255),
-                        payment integer,
+                        payment int,
                         date date,
                         description text,
                         candidate text,
