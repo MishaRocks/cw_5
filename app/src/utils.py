@@ -1,6 +1,6 @@
 import psycopg2
 from app.src.hh_api import HeadHunterAPI
-from app.src.config import config
+from app.src.constants import db_dict
 
 hh = HeadHunterAPI()
 
@@ -11,10 +11,10 @@ def create_tables():
     :return: ничего
     """
     conn = psycopg2.connect(
-        host="localhost",
+        host=db_dict()["host"],
         database="postgres",
-        user="postgres",
-        password="qadratura")
+        user=db_dict()["user"],
+        password=db_dict()["password"])
 
     conn.autocommit = True
 
@@ -26,10 +26,10 @@ def create_tables():
     conn.close()
 
     with psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura"
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"]
     ) as conn:
         with conn.cursor() as cur:
             cur.execute("""
@@ -66,10 +66,10 @@ def add_to_table(employers_list: list):
     """
 
     with psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura"
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"]
     ) as conn:
 
         with conn.cursor() as cur:

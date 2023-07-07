@@ -17,3 +17,7 @@ employers_dict = {
 }
 
 employers_list = [1740, 15478, 8620, 3529, 78638, 4006, 4504679, 561525, 64174, 8642172, 3785152, 4934, 205152, 3776, 4394]
+
+
+def db_dict() -> dict:
+    return {"host": "localhost", "database": "cw_5", "user": "postgres", "password": "qadratura"}
