@@ -1,4 +1,5 @@
 import psycopg2
+from app.src.constants import db_dict
 
 
 class DBManager:
@@ -9,10 +10,10 @@ class DBManager:
         :return: list
         """
         conn = psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura")
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"])
         with conn.cursor() as cur:
             cur.execute(f"SELECT employees.title, count(vacancies.*) "
                         f"FROM employees JOIN vacancies USING (employer_id) GROUP BY employees.title")
@@ -25,10 +26,10 @@ class DBManager:
         :return: list
         """
         conn = psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura")
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"])
         with conn.cursor() as cur:
             cur.execute("""
             SELECT employees.title, vacancies.title, vacancies.payment, vacancies.url
@@ -44,10 +45,10 @@ class DBManager:
         :return: int
         """
         conn = psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura")
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"])
         with conn.cursor() as cur:
             cur.execute("""SELECT CAST(ROUND(AVG(payment)) as INTEGER) FROM vacancies""")
             result = cur.fetchall()
@@ -59,10 +60,10 @@ class DBManager:
         :return: list
         """
         conn = psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura")
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"])
         with conn.cursor() as cur:
             cur.execute("""SELECT * FROM vacancies WHERE payment > (SELECT AVG(payment) FROM vacancies)""")
             result = cur.fetchall()
@@ -74,10 +75,10 @@ class DBManager:
         :return: list
         """
         conn = psycopg2.connect(
-            host="localhost",
-            database="cw_5",
-            user="postgres",
-            password="qadratura")
+            host=db_dict()["host"],
+            database=db_dict()["database"],
+            user=db_dict()["user"],
+            password=db_dict()["password"])
         with conn.cursor() as cur:
             cur.execute(f"SELECT * FROM vacancies WHERE title LIKE('%{keyword}%')")
             result = cur.fetchall()
