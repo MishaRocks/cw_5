@@ -1,6 +1,7 @@
 import psycopg2
 from app.src.hh_api import HeadHunterAPI
 from app.src.constants import db_dict
+from app.src.config import config
 
 hh = HeadHunterAPI()
 
@@ -25,12 +26,7 @@ def create_tables():
     cur.close()
     conn.close()
 
-    with psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"]
-    ) as conn:
+    with psycopg2.connect(**config()) as conn:
         with conn.cursor() as cur:
             cur.execute("""
                         CREATE TABLE employees (
@@ -65,12 +61,7 @@ def add_to_table(employers_list: list):
     :return: ничего
     """
 
-    with psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"]
-    ) as conn:
+    with psycopg2.connect(**config()) as conn:
 
         with conn.cursor() as cur:
 
@@ -86,5 +77,4 @@ def add_to_table(employers_list: list):
                 for v in vacancy_list:
                     cur.execute('INSERT INTO vacancies (title, payment, date, description, candidate, url, employer_id) VALUES (%s, %s, %s, %s, %s, %s, %s)',
                                 (v["title"], v["payment"], v["date"], v["description"], v["candidate"], v["url"], v["employer_id"]))
-
     conn.close()

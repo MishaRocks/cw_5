@@ -1,5 +1,5 @@
 import psycopg2
-from app.src.constants import db_dict
+from app.src.config import config
 
 
 class DBManager:
@@ -9,11 +9,7 @@ class DBManager:
         получает список всех компаний и количество вакансий у каждой компании.
         :return: list
         """
-        conn = psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"])
+        conn = psycopg2.connect(**config())
         with conn.cursor() as cur:
             cur.execute(f"SELECT employees.title, count(vacancies.*) "
                         f"FROM employees JOIN vacancies USING (employer_id) GROUP BY employees.title")
@@ -25,11 +21,7 @@ class DBManager:
         получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию.
         :return: list
         """
-        conn = psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"])
+        conn = psycopg2.connect(**config())
         with conn.cursor() as cur:
             cur.execute("""
             SELECT employees.title, vacancies.title, vacancies.payment, vacancies.url
@@ -44,11 +36,7 @@ class DBManager:
         получает среднюю зарплату по вакансиям.
         :return: int
         """
-        conn = psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"])
+        conn = psycopg2.connect(**config())
         with conn.cursor() as cur:
             cur.execute("""SELECT CAST(ROUND(AVG(payment)) as INTEGER) FROM vacancies""")
             result = cur.fetchall()
@@ -59,11 +47,7 @@ class DBManager:
         получает список всех вакансий, у которых зарплата выше средней по всем вакансиям.
         :return: list
         """
-        conn = psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"])
+        conn = psycopg2.connect(**config())
         with conn.cursor() as cur:
             cur.execute("""SELECT * FROM vacancies WHERE payment > (SELECT AVG(payment) FROM vacancies)""")
             result = cur.fetchall()
@@ -74,11 +58,7 @@ class DBManager:
         получает список всех вакансий, в названии которых содержатся переданные в метод слова.
         :return: list
         """
-        conn = psycopg2.connect(
-            host=db_dict()["host"],
-            database=db_dict()["database"],
-            user=db_dict()["user"],
-            password=db_dict()["password"])
+        conn = psycopg2.connect(**config())
         with conn.cursor() as cur:
             cur.execute(f"SELECT * FROM vacancies WHERE title LIKE('%{keyword}%')")
             result = cur.fetchall()
